@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/Bluhabit/uwang-rest-storage/routes"
+	"github.com/Bluhabit/uwang-rest-account/routes"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
