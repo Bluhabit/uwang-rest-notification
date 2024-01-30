@@ -6,13 +6,13 @@ COPY go.mod go.sum ./
 RUN go mod download
 
 COPY . .
-RUN CGO_ENABLED=0 GOOS=linux go build -o uwang-rest-account .
+RUN CGO_ENABLED=0 GOOS=linux go build -o uwang-rest-notification .
 
 FROM alpine:edge
 
 WORKDIR /app
 
-COPY --from=builder /app/uwang-rest-account .
+COPY --from=builder /app/uwang-rest-notification .
 RUN apk --no-cache add ca-certificates tzdata
 EXPOSE 7009
 ENTRYPOINT ["/app/uwang-rest-storage"]

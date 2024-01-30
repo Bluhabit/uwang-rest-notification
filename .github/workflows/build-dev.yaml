@@ -43,10 +43,10 @@ jobs:
           docker login https://registry.bluhabit.id -u $DOCKER_USER -p $DOCKER_PASSWORD
 
       - name: Build Dev image
-        run: docker build -t registry.bluhabit.id/uwang-rest-account:dev-${{env.RELEASE_VERSION}} . -f ./dockerfile/dev.Dockerfile --no-cache
+        run: docker build -t registry.bluhabit.id/uwang-rest-notification:dev-${{env.RELEASE_VERSION}} . -f ./dockerfile/dev.Dockerfile --no-cache
 
       - name: Push Dev
-        run: docker push registry.bluhabit.id/uwang-rest-account:dev-${{env.RELEASE_VERSION}}
+        run: docker push registry.bluhabit.id/uwang-rest-notification:dev-${{env.RELEASE_VERSION}}
       # Pushing release tag only if everything before passed
       - name: Push Release Tag
         run: git push origin ${{env.RELEASE_VERSION}}
@@ -69,8 +69,8 @@ jobs:
           password: ${{secrets.SSH_PASSWORD}}
           port: ${{secrets.SSH_PORT}}
           script: |
-            cd vps-config/application/uwang-rest-account/dev
-            docker stop uwang-rest-account-dev
-            docker rm uwang-rest-account-dev
-            docker pull registry.bluhabit.id/uwang-rest-account:dev-${{env.RELEASE_VERSION}}
-            docker run --env-file .env -v ./data:/data:rw --network app-net --add-host "host.docker.internal:host-gateway" --name uwang-rest-account-dev -p 7009:8000  -d registry.bluhabit.id/uwang-rest-account:dev-${{env.RELEASE_VERSION}}
+            cd vps-config/application/uwang-rest-notification/dev
+            docker stop uwang-rest-notification-dev
+            docker rm uwang-rest-notification-dev
+            docker pull registry.bluhabit.id/uwang-rest-notification:dev-${{env.RELEASE_VERSION}}
+            docker run --env-file .env -v ./data:/data:rw --network app-net --add-host "host.docker.internal:host-gateway" --name uwang-rest-notification-dev -p 7012:8000  -d registry.bluhabit.id/uwang-rest-notification:dev-${{env.RELEASE_VERSION}}
